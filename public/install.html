@@ -252,27 +252,20 @@
       document.getElementById('steps-card').scrollIntoView({ behavior: 'smooth' });
     }
 
-    const ua = navigator.userAgent;
-    const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-    const isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|Chrome/.test(ua);
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
-      || (window.navigator as any).standalone === true;
+    var ua = navigator.userAgent;
+    var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    var isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|Chrome/.test(ua);
+    var isStandalone = window.matchMedia('(display-mode: standalone)').matches
+      || window.navigator.standalone === true;
 
     if (isStandalone) {
-      // PWA として起動済み → アプリ本体にリダイレクト
       window.location.href = './';
     } else if (isIOS && !isSafari) {
-      document.getElementById('safari-warn')!.style.display = 'block';
+      document.getElementById('safari-warn').style.display = 'block';
     } else if (!isIOS) {
-      // PC / Android は直接アプリに誘導
-      document.getElementById('btn-get')!.style.display = 'none';
-      document.getElementById('btn-open')!.style.display = 'inline-block';
-      const stepsCard = document.getElementById('steps-card')!;
-      stepsCard.querySelector('.steps-title')!.textContent = '🖥 PC / Android の場合';
-      stepsCard.innerHTML = stepsCard.innerHTML.replace(
-        '📲 ホーム画面に追加する方法',
-        '🖥 PC / Android の場合'
-      );
+      document.getElementById('btn-get').style.display = 'none';
+      document.getElementById('btn-open').style.display = 'inline-block';
+      document.getElementById('steps-card').querySelector('.steps-title').textContent = '🖥 PC / Android の場合';
     }
   </script>
 </body>
