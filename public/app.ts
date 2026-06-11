@@ -675,6 +675,7 @@ class TodoApp {
     input.classList.remove('invalid');
     document.getElementById('title-error')!.classList.remove('visible');
     document.getElementById('modal-overlay')!.classList.add('active');
+    void input.offsetHeight; // iOSでキーボードを確実に開くためスタイル再計算を強制
     input.focus();
   }
 
