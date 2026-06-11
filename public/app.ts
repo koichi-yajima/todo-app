@@ -411,7 +411,7 @@ class TodoApp {
     if (sub.completed) circle.classList.add('checked'); else circle.classList.remove('checked');
     document.getElementById('sheet-overlay')!.classList.add('visible');
     document.getElementById('subtask-sheet')!.classList.add('open');
-    setTimeout(() => input.focus(), 80);
+    input.focus();
   }
 
   private closeSubtaskSheet(save: boolean): void {
@@ -670,11 +670,12 @@ class TodoApp {
   }
 
   private openModal(): void {
-    (document.getElementById('task-title') as HTMLInputElement).value = '';
-    document.getElementById('task-title')!.classList.remove('invalid');
+    const input = document.getElementById('task-title') as HTMLInputElement;
+    input.value = '';
+    input.classList.remove('invalid');
     document.getElementById('title-error')!.classList.remove('visible');
     document.getElementById('modal-overlay')!.classList.add('active');
-    setTimeout(() => (document.getElementById('task-title') as HTMLInputElement).focus(), 80);
+    input.focus();
   }
 
   private closeModal(): void {
