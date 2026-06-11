@@ -575,9 +575,7 @@ class TodoApp {
 
     document.getElementById('btn-open-modal')!.addEventListener('click', () => this.openModal());
     document.getElementById('btn-close-modal')!.addEventListener('click', () => this.closeModal());
-    document.getElementById('modal-overlay')!.addEventListener('click', (e) => {
-      if (e.target === document.getElementById('modal-overlay')) this.closeModal();
-    });
+    document.getElementById('modal-overlay')!.addEventListener('click', () => this.closeModal());
     document.getElementById('task-form')!.addEventListener('submit', (e) => {
       e.preventDefault(); this.handleFormSubmit();
     });
@@ -674,15 +672,14 @@ class TodoApp {
     input.value = '';
     input.classList.remove('invalid');
     document.getElementById('title-error')!.classList.remove('visible');
-    // iOS: 常にDOMにある不可視relayを先にフォーカスしてキーボードを起動する
-    (document.getElementById('ios-focus-relay') as HTMLInputElement).focus();
     document.getElementById('modal-overlay')!.classList.add('active');
-    void input.offsetHeight;
+    document.getElementById('modal-container')!.classList.add('active');
     input.focus();
   }
 
   private closeModal(): void {
     document.getElementById('modal-overlay')!.classList.remove('active');
+    document.getElementById('modal-container')!.classList.remove('active');
     (document.getElementById('task-title') as HTMLInputElement).value = '';
     document.getElementById('task-title')!.classList.remove('invalid');
     document.getElementById('title-error')!.classList.remove('visible');

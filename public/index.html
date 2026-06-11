@@ -161,8 +161,11 @@
     </svg>
   </button>
 
-  <!-- Create task modal (title only) -->
-  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <!-- モーダル背景（バックドロップのみ） -->
+  <div class="modal-backdrop" id="modal-overlay"></div>
+
+  <!-- モーダル本体（常にDOM存在・transformで隠す） -->
+  <div class="modal-container" id="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal">
       <div class="modal-handle"></div>
       <div class="modal-header">
@@ -278,11 +281,6 @@
       <button class="btn-sheet-close" id="btn-sheet-close">閉じる</button>
     </div>
   </div>
-
-  <!-- iOS キーボード起動用リレー input（常にDOMに存在、不可視） -->
-  <input id="ios-focus-relay" type="text" autocomplete="off"
-    style="position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px;border:none;padding:0;pointer-events:none;"
-    tabindex="-1" aria-hidden="true">
 
   <script src="app.js"></script>
   <script>

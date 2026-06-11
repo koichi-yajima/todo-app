@@ -532,21 +532,34 @@ button { font-family: inherit; }
 /* ============================================================
    Modal
    ============================================================ */
-.modal-overlay {
-  display: none;
+/* バックドロップ（タップ検知のみ） */
+.modal-backdrop {
   position: fixed;
   inset: 0;
-  align-items: flex-end;
-  justify-content: center;
+  background: rgba(0, 0, 0, 0);
   z-index: 100;
+  pointer-events: none;
+  transition: background 0.15s;
 }
-.modal-overlay.active {
+.modal-backdrop.active {
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: all;
+}
+
+/* モーダル本体（transformで隠す＝inputは常にDOM上でアクティブ） */
+.modal-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
-  animation: backdropIn 0.15s ease forwards;
+  justify-content: center;
+  z-index: 101;
+  transform: translateY(100%);
+  transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1);
 }
-@keyframes backdropIn {
-  from { background: rgba(0, 0, 0, 0); }
-  to   { background: rgba(0, 0, 0, 0.45); }
+.modal-container.active {
+  transform: translateY(0);
 }
 
 .modal {
@@ -557,10 +570,7 @@ button { font-family: inherit; }
   max-width: 640px;
   max-height: 92vh;
   overflow-y: auto;
-  transform: translateY(100%);
-  transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1);
 }
-.modal-overlay.active .modal { transform: translateY(0); }
 
 .modal-handle {
   width: 36px;
