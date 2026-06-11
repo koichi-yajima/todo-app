@@ -533,20 +533,20 @@ button { font-family: inherit; }
    Modal
    ============================================================ */
 .modal-overlay {
+  display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
   align-items: flex-end;
   justify-content: center;
   z-index: 100;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s;
 }
 .modal-overlay.active {
-  opacity: 1;
-  pointer-events: all;
+  display: flex;
+  animation: backdropIn 0.15s ease forwards;
+}
+@keyframes backdropIn {
+  from { background: rgba(0, 0, 0, 0); }
+  to   { background: rgba(0, 0, 0, 0.45); }
 }
 
 .modal {
