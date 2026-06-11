@@ -3,6 +3,15 @@
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+button, a, [role="tab"], [role="listitem"],
+.todo-item, .detail-item, .drawer-item, .drawer-list-item,
+.tab, .sort-btn, .sheet-color-dot, .sheet-date-btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 :root {
   --primary:    #E85424;
   --primary-lt: rgba(232, 84, 36, 0.1);
@@ -14,7 +23,7 @@
   --green:      #34C759;
   --red:        #FF3B30;
   --drawer-w:   280px;
-  --transition: 0.2s ease;
+  --transition: 0.1s ease;
 }
 
 html { font-size: 16px; }
@@ -59,7 +68,7 @@ button { font-family: inherit; }
   z-index: 50;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s;
+  transition: opacity 0.15s;
 }
 .drawer-overlay.visible {
   opacity: 1;
@@ -78,7 +87,7 @@ button { font-family: inherit; }
   background: var(--bg);
   z-index: 60;
   transform: translateX(-100%);
-  transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1);
   display: flex;
   flex-direction: column;
   box-shadow: 2px 0 24px rgba(0, 0, 0, 0.14);
@@ -262,7 +271,7 @@ button { font-family: inherit; }
 .search-bar {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.25s ease, padding 0.25s ease;
+  transition: max-height 0.15s ease, padding 0.15s ease;
   padding: 0 16px;
 }
 .search-bar.visible {
@@ -357,7 +366,7 @@ button { font-family: inherit; }
 .quick-add {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.25s ease, padding 0.25s ease;
+  transition: max-height 0.15s ease, padding 0.15s ease;
   padding: 0 16px;
 }
 .quick-add.visible {
@@ -533,7 +542,7 @@ button { font-family: inherit; }
   z-index: 100;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s;
+  transition: opacity 0.15s;
 }
 .modal-overlay.active {
   opacity: 1;
@@ -549,7 +558,7 @@ button { font-family: inherit; }
   max-height: 92vh;
   overflow-y: auto;
   transform: translateY(100%);
-  transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1);
 }
 .modal-overlay.active .modal { transform: translateY(0); }
 
@@ -663,7 +672,7 @@ textarea { resize: vertical; min-height: 80px; }
   background: var(--bg);
   z-index: 40;
   transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -872,7 +881,7 @@ textarea { resize: vertical; min-height: 80px; }
   padding: 0 16px;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.25s ease, padding 0.25s ease;
+  transition: max-height 0.15s ease, padding 0.15s ease;
   flex-shrink: 0;
   background: var(--bg);
   border-top: 0px solid transparent;
@@ -1104,7 +1113,7 @@ textarea { resize: vertical; min-height: 80px; }
   background: rgba(0, 0, 0, 0.25);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s;
+  transition: opacity 0.15s;
 }
 .sheet-overlay.visible {
   opacity: 1;
@@ -1121,7 +1130,7 @@ textarea { resize: vertical; min-height: 80px; }
   border-radius: 14px 14px 0 0;
   padding: 10px 14px 6px;
   transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1);
   box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
 }
 .subtask-sheet.open {
