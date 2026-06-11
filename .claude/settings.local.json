@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(New-Item *)",
+      "Skill(run)",
+      "PowerShell(curl.exe -s http://localhost:3000/api/todos)",
+      "PowerShell(Start-Process \"http://localhost:3001\")",
+      "PowerShell(netstat *)",
+      "PowerShell(Invoke-RestMethod -Uri \"http://localhost:3000/api/todos\" -Method GET | ConvertTo-Json)",
+      "PowerShell(cd C:\\\\Users\\\\yajik\\\\projects\\\\todo-app; $proc = Start-Process -FilePath \"npx\" -ArgumentList \"ts-node\",\"src/server.ts\" -PassThru -RedirectStandardOutput \"C:\\\\Temp\\\\todo-server.log\" -RedirectStandardError \"C:\\\\Temp\\\\todo-server-err.log\" -NoNewWindow; $proc.Id)",
+      "PowerShell(Start-Sleep -Seconds 5; $r = try { Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 3 } catch { $null }; if \\($r\\) { \"UP: $\\($r.StatusCode\\)\" } else { \"NOT UP\" })",
+      "PowerShell(where.exe playwright 2>$null; npx playwright --version 2>&1 | Select-Object -First 2)",
+      "PowerShell(Receive-Job *)",
+      "PowerShell(Start-Sleep -Seconds 8; $r = try { Invoke-WebRequest -Uri \"http://localhost:3001\" -UseBasicParsing -TimeoutSec 3 } catch { $null }; if \\($r\\) { \"UP 3001: $\\($r.StatusCode\\)\" } else { \"NOT UP on 3001\" })",
+      "PowerShell(cd C:\\\\Users\\\\yajik\\\\projects\\\\todo-app; $env:PORT = \"3001\"; Start-Process \"cmd.exe\" -ArgumentList \"/c\",\"npm run dev\" -WorkingDirectory \"C:\\\\Users\\\\yajik\\\\projects\\\\todo-app\" -WindowStyle Hidden; Start-Sleep -Seconds 8; $r = try { Invoke-WebRequest -Uri \"http://localhost:3001\" -UseBasicParsing -TimeoutSec 3 } catch { $_.Exception.Message }; $r)",
+      "PowerShell(npm install *)",
+      "PowerShell(\\(Get-Command git -ErrorAction SilentlyContinue\\).Source)"
+    ]
+  }
+}

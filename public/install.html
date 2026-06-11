@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ToDoリスト - インストール</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ToDo">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #E85424;
+      --bg: #F2F2F7;
+      --card: #FFFFFF;
+      --text1: #1C1C1E;
+      --text2: #6C6C70;
+      --sep: #E5E5EA;
+    }
+    body {
+      font-family: -apple-system, 'Hiragino Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text1);
+      min-height: 100vh;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .hero {
+      background: var(--card);
+      padding: 32px 20px 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--sep);
+    }
+    .app-icon {
+      width: 88px;
+      height: 88px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .hero-info { flex: 1; }
+    .hero-info h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .hero-sub { font-size: 14px; color: var(--text2); margin-bottom: 12px; }
+    .btn-get {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 8px 24px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.3px;
+    }
+    .already-badge {
+      display: none;
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .open-btn {
+      display: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 8px 24px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
+    }
+    .screenshots {
+      padding: 20px;
+      overflow-x: auto;
+      display: flex;
+      gap: 12px;
+      background: var(--card);
+      margin-top: 12px;
+    }
+    .screenshot {
+      width: 140px;
+      height: 250px;
+      background: linear-gradient(135deg, #E85424 0%, #c73d10 100%);
+      border-radius: 14px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .screenshot svg { opacity: 0.9; }
+    .steps-card {
+      background: var(--card);
+      margin: 12px 0 0;
+      padding: 20px;
+    }
+    .steps-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text1);
+    }
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--sep);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text { font-size: 15px; line-height: 1.5; padding-top: 4px; }
+    .step-text strong { color: var(--primary); }
+    .step-icon { font-size: 22px; }
+    .safari-warn {
+      background: #FFF3CD;
+      border: 1px solid #FFD700;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+      display: none;
+    }
+    .safari-warn strong { color: #856404; }
+    /* iOS share button image */
+    .share-icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      vertical-align: -5px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E85424' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 12L12 8l4 4M12 8v12M4 20h16'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+    /* Already installed banner */
+    .installed-view {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+    .installed-view .big-check {
+      width: 80px;
+      height: 80px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="main-view">
+    <!-- Safari 以外の警告 -->
+    <div class="safari-warn" id="safari-warn">
+      ⚠️ <strong>Safari で開いてください</strong><br>
+      ホーム画面への追加は Safari のみ対応しています。このリンクを Safari にコピーして開いてください。
+    </div>
+
+    <!-- ヒーロー -->
+    <div class="hero">
+      <img src="icons/icon-180.png" class="app-icon" alt="icon">
+      <div class="hero-info">
+        <h1>ToDoリスト</h1>
+        <p class="hero-sub">タスク管理アプリ</p>
+        <button class="btn-get" id="btn-get" onclick="scrollToSteps()">入手</button>
+        <a class="open-btn" href="./" id="btn-open">開く</a>
+      </div>
+    </div>
+
+    <!-- スクリーンショット風 -->
+    <div class="screenshots">
+      <div class="screenshot">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <path d="M10 30l14 14 26-26" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="screenshot" style="background:linear-gradient(135deg,#5856D6,#3634A3)">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+          <rect x="8" y="10" width="34" height="4" rx="2" fill="white" fill-opacity="0.9"/>
+          <rect x="8" y="20" width="26" height="4" rx="2" fill="white" fill-opacity="0.7"/>
+          <rect x="8" y="30" width="30" height="4" rx="2" fill="white" fill-opacity="0.7"/>
+          <rect x="8" y="40" width="22" height="4" rx="2" fill="white" fill-opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="screenshot" style="background:linear-gradient(135deg,#30B0C7,#1A7A9A)">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+          <circle cx="25" cy="22" r="10" stroke="white" stroke-width="3" fill="none"/>
+          <path d="M25 12v10l6 4" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <path d="M10 40l6-6M40 40l-6-6" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- インストール手順 -->
+    <div class="steps-card" id="steps-card">
+      <p class="steps-title">📲 ホーム画面に追加する方法</p>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          下部の <strong>共有ボタン <span class="share-icon"></span></strong> をタップ
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>「ホーム画面に追加」</strong> をタップ</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">右上の <strong>「追加」</strong> をタップして完了</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- インストール済みの場合 -->
+  <div class="installed-view" id="installed-view">
+    <div class="big-check">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <path d="M8 20l9 9 15-15" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2 style="font-size:20px;font-weight:700">インストール済み</h2>
+    <p style="font-size:15px;color:#6C6C70">ホーム画面のアイコンからアプリを開いてください</p>
+    <a href="./" style="margin-top:8px;background:#E85424;color:#fff;padding:12px 32px;border-radius:20px;font-size:16px;font-weight:700;text-decoration:none">アプリを開く</a>
+  </div>
+
+  <script>
+    function scrollToSteps() {
+      document.getElementById('steps-card').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const ua = navigator.userAgent;
+    const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    const isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|Chrome/.test(ua);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+      || (window.navigator as any).standalone === true;
+
+    if (isStandalone) {
+      // PWA として起動済み → アプリ本体にリダイレクト
+      window.location.href = './';
+    } else if (isIOS && !isSafari) {
+      document.getElementById('safari-warn')!.style.display = 'block';
+    } else if (!isIOS) {
+      // PC / Android は直接アプリに誘導
+      document.getElementById('btn-get')!.style.display = 'none';
+      document.getElementById('btn-open')!.style.display = 'inline-block';
+      const stepsCard = document.getElementById('steps-card')!;
+      stepsCard.querySelector('.steps-title')!.textContent = '🖥 PC / Android の場合';
+      stepsCard.innerHTML = stepsCard.innerHTML.replace(
+        '📲 ホーム画面に追加する方法',
+        '🖥 PC / Android の場合'
+      );
+    }
+  </script>
+</body>
+</html>
