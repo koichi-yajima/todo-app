@@ -279,6 +279,11 @@
     </div>
   </div>
 
+  <!-- iOS キーボード起動用リレー input（常にDOMに存在、不可視） -->
+  <input id="ios-focus-relay" type="text" autocomplete="off"
+    style="position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px;border:none;padding:0;pointer-events:none;"
+    tabindex="-1" aria-hidden="true">
+
   <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {

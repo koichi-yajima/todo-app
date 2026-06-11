@@ -674,8 +674,10 @@ class TodoApp {
     input.value = '';
     input.classList.remove('invalid');
     document.getElementById('title-error')!.classList.remove('visible');
+    // iOS: 常にDOMにある不可視relayを先にフォーカスしてキーボードを起動する
+    (document.getElementById('ios-focus-relay') as HTMLInputElement).focus();
     document.getElementById('modal-overlay')!.classList.add('active');
-    void input.offsetHeight; // iOSでキーボードを確実に開くためスタイル再計算を強制
+    void input.offsetHeight;
     input.focus();
   }
 
