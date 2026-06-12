@@ -190,6 +190,7 @@ class TodoApp {
     document.getElementById('drawer-overlay')!.classList.remove('visible');
     document.body.classList.remove('drawer-lock');
     this.drawerEditMode = false;
+    this.closeDrawerAddRow();
     this.updateDrawerLists();
   }
   private toggleQuickAdd(): void {
@@ -545,7 +546,12 @@ class TodoApp {
     document.getElementById('btn-menu')!.addEventListener('click', () => this.openDrawer());
     document.getElementById('btn-close-drawer')!.addEventListener('click', () => this.closeDrawer());
     document.getElementById('drawer-overlay')!.addEventListener('click', () => this.closeDrawer());
-    document.getElementById('btn-drawer-add')!.addEventListener('click', () => this.handleCreateList());
+    document.getElementById('btn-drawer-add')!.addEventListener('click', () => this.openDrawerAddRow());
+    document.getElementById('btn-drawer-list-submit')!.addEventListener('click', () => this.submitDrawerList());
+    document.getElementById('drawer-list-input')!.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') this.submitDrawerList();
+      if (e.key === 'Escape') this.closeDrawerAddRow();
+    });
     document.getElementById('btn-drawer-edit')!.addEventListener('click', () => {
       this.drawerEditMode = !this.drawerEditMode;
       document.getElementById('btn-drawer-edit')!.textContent = this.drawerEditMode ? '完了' : '編集';
@@ -624,10 +630,25 @@ class TodoApp {
 
   // ── Modal ─────────────────────────────────────────────────────────────────
 
-  private handleCreateList(): void {
-    const name = prompt('フォルダ名を入力してください');
-    if (!name?.trim()) return;
-    const list = this.createList(name.trim());
+  private openDrawerAddRow(): void {
+    const row = document.getElementById('drawer-add-row')!;
+    const input = document.getElementById('drawer-list-input') as HTMLInputElement;
+    input.value = '';
+    row.classList.add('visible');
+    input.focus();
+  }
+
+  private closeDrawerAddRow(): void {
+    document.getElementById('drawer-add-row')!.classList.remove('visible');
+    (document.getElementById('drawer-list-input') as HTMLInputElement).value = '';
+  }
+
+  private submitDrawerList(): void {
+    const input = document.getElementById('drawer-list-input') as HTMLInputElement;
+    const name = input.value.trim();
+    if (!name) return;
+    this.closeDrawerAddRow();
+    const list = this.createList(name);
     this.renderTabs();
     this.updateDrawerLists();
     this.setFilter(list.id);
