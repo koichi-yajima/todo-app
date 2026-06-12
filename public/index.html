@@ -42,15 +42,12 @@
       <div id="drawer-lists-container"></div>
     </div>
     <div class="drawer-footer">
-      <div class="drawer-add-field" id="btn-drawer-add">
-        <label for="drawer-list-input" class="drawer-add-label">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </label>
-        <input type="text" id="drawer-list-input" placeholder="リストを追加" maxlength="50" autocomplete="off">
-        <button class="drawer-add-submit" id="btn-drawer-list-submit">追加</button>
-      </div>
+      <button class="btn-add-list" id="btn-drawer-add">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        リストを追加
+      </button>
     </div>
   </aside>
 
@@ -206,6 +203,20 @@
       <div class="qr-canvas-wrap" id="qr-canvas"></div>
       <p class="qr-url" id="qr-url"></p>
       <p class="qr-hint">iPhoneのカメラで読み取ってください</p>
+    </div>
+  </div>
+
+  <!-- List name sheet -->
+  <div class="sheet-overlay" id="list-sheet-overlay"></div>
+  <div class="list-name-sheet" id="list-name-sheet">
+    <div class="list-sheet-handle"></div>
+    <p class="list-sheet-title">新しいリスト</p>
+    <div class="list-sheet-input-row">
+      <input type="text" id="list-name-input" placeholder="リスト名を入力" maxlength="50" autocomplete="off">
+    </div>
+    <div class="list-sheet-actions">
+      <button class="list-sheet-cancel" id="btn-list-sheet-cancel">キャンセル</button>
+      <button class="list-sheet-submit" id="btn-list-sheet-submit">追加</button>
     </div>
   </div>
 

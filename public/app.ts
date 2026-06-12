@@ -190,7 +190,6 @@ class TodoApp {
     document.getElementById('drawer-overlay')!.classList.remove('visible');
     document.body.classList.remove('drawer-lock');
     this.drawerEditMode = false;
-    this.closeDrawerAddRow();
     this.updateDrawerLists();
   }
   private toggleQuickAdd(): void {
@@ -546,19 +545,13 @@ class TodoApp {
     document.getElementById('btn-menu')!.addEventListener('click', () => this.openDrawer());
     document.getElementById('btn-close-drawer')!.addEventListener('click', () => this.closeDrawer());
     document.getElementById('drawer-overlay')!.addEventListener('click', () => this.closeDrawer());
-    document.getElementById('btn-drawer-add')!.addEventListener('click', (e) => {
-      if (!(e.target as HTMLElement).closest('#btn-drawer-list-submit')) {
-        (document.getElementById('drawer-list-input') as HTMLInputElement).focus();
-      }
-    });
-    document.getElementById('btn-drawer-list-submit')!.addEventListener('click', () => this.submitDrawerList());
-    const drawerInput = document.getElementById('drawer-list-input') as HTMLInputElement;
-    drawerInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') this.submitDrawerList();
-      if (e.key === 'Escape') this.closeDrawerAddRow();
-    });
-    drawerInput.addEventListener('input', () => {
-      document.getElementById('btn-drawer-add')!.classList.toggle('typing', drawerInput.value.length > 0);
+    document.getElementById('btn-drawer-add')!.addEventListener('click', () => this.openListSheet());
+    document.getElementById('btn-list-sheet-cancel')!.addEventListener('click', () => this.closeListSheet());
+    document.getElementById('btn-list-sheet-submit')!.addEventListener('click', () => this.submitListSheet());
+    document.getElementById('list-sheet-overlay')!.addEventListener('click', () => this.closeListSheet());
+    document.getElementById('list-name-input')!.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') this.submitListSheet();
+      if (e.key === 'Escape') this.closeListSheet();
     });
     document.getElementById('btn-drawer-edit')!.addEventListener('click', () => {
       this.drawerEditMode = !this.drawerEditMode;
@@ -638,21 +631,25 @@ class TodoApp {
 
   // ── Modal ─────────────────────────────────────────────────────────────────
 
-  private openDrawerAddRow(): void {
-    (document.getElementById('drawer-list-input') as HTMLInputElement).focus();
-  }
-
-  private closeDrawerAddRow(): void {
-    const input = document.getElementById('drawer-list-input') as HTMLInputElement;
+  private openListSheet(): void {
+    const input = document.getElementById('list-name-input') as HTMLInputElement;
     input.value = '';
-    document.getElementById('btn-drawer-add')!.classList.remove('typing');
+    document.getElementById('list-sheet-overlay')!.classList.add('visible');
+    document.getElementById('list-name-sheet')!.classList.add('open');
+    input.focus();
   }
 
-  private submitDrawerList(): void {
-    const input = document.getElementById('drawer-list-input') as HTMLInputElement;
+  private closeListSheet(): void {
+    document.getElementById('list-sheet-overlay')!.classList.remove('visible');
+    document.getElementById('list-name-sheet')!.classList.remove('open');
+    (document.getElementById('list-name-input') as HTMLInputElement).value = '';
+  }
+
+  private submitListSheet(): void {
+    const input = document.getElementById('list-name-input') as HTMLInputElement;
     const name = input.value.trim();
     if (!name) return;
-    this.closeDrawerAddRow();
+    this.closeListSheet();
     const list = this.createList(name);
     this.renderTabs();
     this.updateDrawerLists();
