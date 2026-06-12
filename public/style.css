@@ -220,45 +220,43 @@ button { font-family: inherit; }
 }
 .btn-add-list:hover { opacity: 0.75; }
 
-.drawer-add-row {
+/* 常に表示されるリスト追加フィールド */
+.drawer-add-field {
   display: flex;
   align-items: center;
-  gap: 8px;
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.15s ease, opacity 0.15s ease;
+  gap: 10px;
+  padding: 6px 0;
+  color: var(--primary);
+  cursor: text;
 }
-.drawer-add-row.visible {
-  max-height: 48px;
-  opacity: 1;
-}
-.drawer-add-row input {
+.drawer-add-field svg { flex-shrink: 0; }
+.drawer-add-field input {
   flex: 1;
-  height: 38px;
-  border: 1.5px solid var(--sep);
-  border-radius: 10px;
-  padding: 0 12px;
-  font-size: 15px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
   font-family: inherit;
-  color: var(--text-1);
-  background: var(--bg);
+  color: var(--primary);
   outline: none;
+  min-width: 0;
 }
-.drawer-add-row input:focus { border-color: var(--primary); }
+.drawer-add-field input::placeholder { color: var(--primary); opacity: 0.85; }
 .drawer-add-submit {
-  height: 38px;
-  padding: 0 14px;
+  display: none;
+  height: 34px;
+  padding: 0 12px;
   background: var(--primary);
   color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   white-space: nowrap;
+  flex-shrink: 0;
 }
+.drawer-add-field.typing .drawer-add-submit { display: block; }
 
 /* ============================================================
    App shell

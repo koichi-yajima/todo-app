@@ -546,11 +546,14 @@ class TodoApp {
     document.getElementById('btn-menu')!.addEventListener('click', () => this.openDrawer());
     document.getElementById('btn-close-drawer')!.addEventListener('click', () => this.closeDrawer());
     document.getElementById('drawer-overlay')!.addEventListener('click', () => this.closeDrawer());
-    document.getElementById('btn-drawer-add')!.addEventListener('click', () => this.openDrawerAddRow());
     document.getElementById('btn-drawer-list-submit')!.addEventListener('click', () => this.submitDrawerList());
-    document.getElementById('drawer-list-input')!.addEventListener('keydown', (e) => {
+    const drawerInput = document.getElementById('drawer-list-input') as HTMLInputElement;
+    drawerInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') this.submitDrawerList();
       if (e.key === 'Escape') this.closeDrawerAddRow();
+    });
+    drawerInput.addEventListener('input', () => {
+      document.getElementById('btn-drawer-add')!.classList.toggle('typing', drawerInput.value.length > 0);
     });
     document.getElementById('btn-drawer-edit')!.addEventListener('click', () => {
       this.drawerEditMode = !this.drawerEditMode;
@@ -631,16 +634,13 @@ class TodoApp {
   // ── Modal ─────────────────────────────────────────────────────────────────
 
   private openDrawerAddRow(): void {
-    const row = document.getElementById('drawer-add-row')!;
-    const input = document.getElementById('drawer-list-input') as HTMLInputElement;
-    input.value = '';
-    row.classList.add('visible');
-    input.focus();
+    (document.getElementById('drawer-list-input') as HTMLInputElement).focus();
   }
 
   private closeDrawerAddRow(): void {
-    document.getElementById('drawer-add-row')!.classList.remove('visible');
-    (document.getElementById('drawer-list-input') as HTMLInputElement).value = '';
+    const input = document.getElementById('drawer-list-input') as HTMLInputElement;
+    input.value = '';
+    document.getElementById('btn-drawer-add')!.classList.remove('typing');
   }
 
   private submitDrawerList(): void {
