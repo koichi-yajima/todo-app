@@ -546,6 +546,11 @@ class TodoApp {
     document.getElementById('btn-menu')!.addEventListener('click', () => this.openDrawer());
     document.getElementById('btn-close-drawer')!.addEventListener('click', () => this.closeDrawer());
     document.getElementById('drawer-overlay')!.addEventListener('click', () => this.closeDrawer());
+    document.getElementById('btn-drawer-add')!.addEventListener('click', (e) => {
+      if (!(e.target as HTMLElement).closest('#btn-drawer-list-submit')) {
+        (document.getElementById('drawer-list-input') as HTMLInputElement).focus();
+      }
+    });
     document.getElementById('btn-drawer-list-submit')!.addEventListener('click', () => this.submitDrawerList());
     const drawerInput = document.getElementById('drawer-list-input') as HTMLInputElement;
     drawerInput.addEventListener('keydown', (e) => {
