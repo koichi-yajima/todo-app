@@ -111,51 +111,53 @@
   </div>
 
   <div class="app">
-    <header class="app-header">
-      <button class="btn-icon btn-menu" id="btn-menu" aria-label="メニューを開く">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-      </button>
-      <div class="header-right">
-        <button class="btn-icon" id="btn-search-toggle" aria-label="検索">
+    <div class="app-sticky-top">
+      <header class="app-header">
+        <button class="btn-icon btn-menu" id="btn-menu" aria-label="メニューを開く">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M13 13l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
         </button>
-        <button class="btn-icon" id="btn-qr" aria-label="QRコード">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <rect x="2" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.7"/>
-            <rect x="11" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.7"/>
-            <rect x="2" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.7"/>
-            <rect x="3.5" y="3.5" width="4" height="4" rx="0.5" fill="currentColor"/>
-            <rect x="12.5" y="3.5" width="4" height="4" rx="0.5" fill="currentColor"/>
-            <rect x="3.5" y="12.5" width="4" height="4" rx="0.5" fill="currentColor"/>
-            <path d="M11 11h2v2h-2zM13 13h2v2h-2zM15 11h2v2h-2zM11 15h2v2h-2zM15 15h2v2h-2z" fill="currentColor"/>
-          </svg>
-        </button>
+        <div class="header-right">
+          <button class="btn-icon" id="btn-search-toggle" aria-label="検索">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M13 13l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="btn-icon" id="btn-qr" aria-label="QRコード">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="2" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.7"/>
+              <rect x="11" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.7"/>
+              <rect x="2" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.7"/>
+              <rect x="3.5" y="3.5" width="4" height="4" rx="0.5" fill="currentColor"/>
+              <rect x="12.5" y="3.5" width="4" height="4" rx="0.5" fill="currentColor"/>
+              <rect x="3.5" y="12.5" width="4" height="4" rx="0.5" fill="currentColor"/>
+              <path d="M11 11h2v2h-2zM13 13h2v2h-2zM15 11h2v2h-2zM11 15h2v2h-2zM15 15h2v2h-2z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="search-bar" id="search-bar">
+        <input type="search" id="search-input" placeholder="タスクを検索..." autocomplete="off">
       </div>
-    </header>
 
-    <div class="search-bar" id="search-bar">
-      <input type="search" id="search-input" placeholder="タスクを検索..." autocomplete="off">
-    </div>
-
-    <div class="tabs-wrapper">
-      <div class="filter-tabs" role="tablist"></div>
-      <div class="tabs-actions">
-        <button class="tab-ctrl-btn" id="btn-quick-add-toggle">＋ タスク</button>
+      <div class="tabs-wrapper">
+        <div class="filter-tabs" role="tablist"></div>
+        <div class="tabs-actions">
+          <button class="tab-ctrl-btn" id="btn-quick-add-toggle">＋ タスク</button>
+        </div>
       </div>
-    </div>
 
-    <div class="quick-add" id="quick-add-bar">
-      <input type="text" id="quick-add-input" placeholder="タスク名を入力して Enter" maxlength="200" autocomplete="off">
-    </div>
+      <div class="quick-add" id="quick-add-bar">
+        <input type="text" id="quick-add-input" placeholder="タスク名を入力して Enter" maxlength="200" autocomplete="off">
+      </div>
 
-    <div class="task-sort-bar" id="task-sort-bar">
-      <button class="sort-btn active" data-sort="default">更新順</button>
-      <button class="sort-btn" data-sort="alpha">あいうえお順</button>
+      <div class="task-sort-bar" id="task-sort-bar">
+        <button class="sort-btn active" data-sort="default">更新順</button>
+        <button class="sort-btn" data-sort="alpha">あいうえお順</button>
+      </div>
     </div>
 
     <main class="todo-list" id="todo-list" role="list"></main>
