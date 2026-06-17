@@ -52,6 +52,8 @@ class TodoApp {
     void this.requestNotificationPermission();
     this.loadTodos();
     this.loadLists();
+    const firstList = [...this.lists].sort((a, b) => a.order - b.order)[0];
+    if (firstList) this.filter = firstList.id;
     this.setupEventListeners();
     this.renderTabs();
     this.render();
