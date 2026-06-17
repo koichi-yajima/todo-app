@@ -36,6 +36,7 @@ class TodoApp {
   private filter = 'all';
   private reminderTimers = new Map<string, ReturnType<typeof setTimeout>>();
   private sortableInstance: { destroy(): void } | null = null;
+  private drawerSortableInstance: { destroy(): void } | null = null;
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
   private drawerEditMode = false;
 
@@ -117,6 +118,15 @@ class TodoApp {
       if (t) t.order = i;
     });
     this.saveTodos();
+  }
+
+  private reorderLists(orderedIds: string[]): void {
+    orderedIds.forEach((id, i) => {
+      const l = this.lists.find(x => x.id === id);
+      if (l) l.order = i;
+    });
+    this.lists.sort((a, b) => a.order - b.order);
+    this.saveLists();
   }
 
   // ── CRUD: Lists ───────────────────────────────────────────────────────────
@@ -507,7 +517,7 @@ class TodoApp {
 
   private renderTabs(): void {
     const container = document.querySelector<HTMLElement>('.filter-tabs')!;
-    container.innerHTML = this.lists.map(l => {
+    container.innerHTML = [...this.lists].sort((a, b) => a.order - b.order).map(l => {
       const active = this.filter === l.id ? ' active' : '';
       const icon = `<svg width="12" height="11" viewBox="0 0 12 11" fill="none" style="margin-right:3px;vertical-align:-1px"><path d="M1 2h3.5l1.2 1.2H11V9H1V2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`;
       return `<button class="tab${active}" data-filter="${this.esc(l.id)}" role="tab">${icon}${this.esc(l.name)} <span class="tab-count" id="tab-count-${this.esc(l.id)}"></span></button>`;
@@ -524,7 +534,7 @@ class TodoApp {
       return;
     }
     const editClass = this.drawerEditMode ? ' drawer-editing' : '';
-    container.innerHTML = this.lists.map(l => {
+    container.innerHTML = [...this.lists].sort((a, b) => a.order - b.order).map(l => {
       const count = this.todos.filter(t => t.listId === l.id).length;
       return `
         <div class="drawer-item drawer-list-item${editClass}" data-list-id="${l.id}">
@@ -558,6 +568,26 @@ class TodoApp {
         this.updateDrawerLists();
         this.render();
       });
+    });
+    this.initDrawerSortable(container);
+  }
+
+  private initDrawerSortable(container: HTMLElement): void {
+    if (this.drawerSortableInstance) this.drawerSortableInstance.destroy();
+    if (this.lists.length < 2) { this.drawerSortableInstance = null; return; }
+    this.drawerSortableInstance = new Sortable(container, {
+      animation: 150,
+      delay: 350,
+      delayOnTouchOnly: true,
+      touchStartThreshold: 5,
+      ghostClass: 'sortable-ghost',
+      chosenClass: 'sortable-chosen',
+      onEnd: () => {
+        const ids = Array.from(container.querySelectorAll<HTMLElement>('[data-list-id]'))
+          .map(el => el.dataset.listId!).filter(Boolean);
+        this.reorderLists(ids);
+        this.renderTabs();
+      },
     });
   }
 
