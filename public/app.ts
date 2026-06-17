@@ -43,7 +43,7 @@ class TodoApp {
   private detailEditMode = false;
   private detailMoreVisible = false;
   private currentSubtaskId: string | null = null;
-  private taskSort: 'default' | 'alpha' = 'default';
+  private taskSort: 'default' | 'alpha' = 'alpha';
 
   constructor() { this.init(); }
 
