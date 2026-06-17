@@ -178,6 +178,28 @@ class TodoApp {
     this.toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
   }
 
+  // ── Export ────────────────────────────────────────────────────────────────
+
+  private exportData(): void {
+    const data = {
+      todos: this.todos,
+      lists: this.lists,
+      exportedAt: new Date().toISOString(),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const date = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `todo-backup-${date}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    this.showToast('データをエクスポートしました');
+    this.closeDrawer();
+  }
+
   // ── Drawer ────────────────────────────────────────────────────────────────
 
   private openDrawer(): void {
@@ -546,6 +568,7 @@ class TodoApp {
     document.getElementById('btn-close-drawer')!.addEventListener('click', () => this.closeDrawer());
     document.getElementById('drawer-overlay')!.addEventListener('click', () => this.closeDrawer());
     document.getElementById('btn-drawer-add')!.addEventListener('click', () => this.openListSheet());
+    document.getElementById('btn-drawer-export')!.addEventListener('click', () => this.exportData());
     document.getElementById('btn-list-sheet-cancel')!.addEventListener('click', () => this.closeListSheet());
     document.getElementById('btn-list-sheet-submit')!.addEventListener('click', () => this.submitListSheet());
     document.getElementById('list-sheet-overlay')!.addEventListener('click', () => this.closeListSheet());
